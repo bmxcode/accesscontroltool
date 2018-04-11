@@ -144,6 +144,11 @@ public class AuthorizableInstallerServiceImplTest {
             doReturn(id).when(authorizable).getID();
             doReturn(isGroup).when(authorizable).isGroup();
             doReturn("/home/" + (isGroup ? "groups" : "users") + (isSystemUser ? "/system" : "") + "/test").when(authorizable).getPath();
+            if (isGroup) {
+                Group group = (Group) authorizable;
+                doReturn(Boolean.TRUE).when(group).addMember((Authorizable) Matchers.any());
+                doReturn(Boolean.TRUE).when(group).removeMember((Authorizable) Matchers.any());
+            }
         }
 
         @Test
